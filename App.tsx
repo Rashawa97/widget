@@ -1,0 +1,36 @@
+import React, {useState} from 'react';
+import {View, TextInput, StyleSheet, NativeModules} from 'react-native';
+const group = 'group.asap';
+const SharedStorage = NativeModules.SharedStorage;
+const App = () => {
+  const [text, setText] = useState('');
+  const handleSubmit = async () => {
+    SharedStorage.set(JSON.stringify({text}));
+  };
+
+  return (
+    <View style={styles.container}>
+      <TextInput
+        style={styles.input}
+        onChangeText={newText => setText(newText)}
+        value={text}
+        returnKeyType="send"
+        onEndEditing={handleSubmit}
+        placeholder="Enter the text to display on the Widget"
+      />
+    </View>
+  );
+};
+export default App;
+const styles = StyleSheet.create({
+  container: {
+    marginTop: '50%',
+    paddingHorizontal: 24,
+  },
+  input: {
+    width: '100%',
+    borderBottomWidth: 1,
+    fontSize: 20,
+    minHeight: 40,
+  },
+});
